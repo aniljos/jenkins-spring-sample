@@ -56,10 +56,10 @@ pipeline {
                     //bat "move ${imageTar} ${env.SAVE_PATH}"
 
                     // Save the Docker image to a tar file
-                    sh "docker save -o ${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
+                    bat "docker save -o ${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
 
                     // Copy the tar file to the desired local path
-                    sh "cp ${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar ${env.SAVE_PATH}"
+                    bat "move ${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar ${env.SAVE_PATH}"
                   }
             }
         }
