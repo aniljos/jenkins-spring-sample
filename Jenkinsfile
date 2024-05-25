@@ -9,8 +9,11 @@ pipeline {
 
     environment {
         // Define any environment variables
-        MAVEN_HOME = tool name: 'maven 3.9.6'
-        PATH = "${MAVEN_HOME}/bin:${env.PATH}"
+        DOCKER_IMAGE = '-spring-services:latest'
+        POSTGRES_DB = 'training'
+        POSTGRES_USER = 'postgres'
+        POSTGRES_PASSWORD = 'sa'
+        SAVE_PATH = 'D:\\Jenkins\\Spring\\docker-images'
     }
 
     stages {
@@ -32,27 +35,21 @@ pipeline {
                 bat 'mvn test'
             }
         }
-        stage('Package') {
+        stage('Build Docker Image') {
             steps {
-                // Package the application (already done in the build stage, but included here for clarity)
-                bat 'mvn package'
+                script {
+                    // Build Docker image
+                    bat "docker build -t ${DOCKER_IMAGE} ."
+                }
             }
         }
         stage('Deploy') {
             steps {
-                // Deploy the application
-                // This step can include copying the artifact to a server, running Docker commands, etc.
-                echo 'Deploying application...'
-                // Example: Copy the JAR file to a remote server
-                // sh 'scp target/your-app.jar user@remote.server:/path/to/deploy'
-
-                script {
-                       def sourcePath = "${env.WORKSPACE}\\target\\app-services-1.0.0.jar" // Update with your actual JAR file name
-                       def destinationPath = "D:\\Jenkins\\Spring\\builds" // Update with your desired destination path
-
-                       // Copy the built JAR file to the destination path
-                       bat "copy ${sourcePath} ${destinationPath}"
-                  }
+                 //bat "docker-compose down"
+                 //bat "docker-compose up -d"
+                  def imageTar = "${env.WORKSPACE}\\${DOCKER_IMAGE}.tar"
+                  bat "docker save -o ${imageTar} ${env.DOCKER_IMAGE}"
+                  bat "move ${imageTar} ${env.SAVE_PATH}"
             }
         }
     }
