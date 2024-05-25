@@ -47,9 +47,11 @@ pipeline {
             steps {
                  //bat "docker-compose down"
                  //bat "docker-compose up -d"
-                  def imageTar = "${env.WORKSPACE}\\${DOCKER_IMAGE}.tar"
-                  bat "docker save -o ${imageTar} ${env.DOCKER_IMAGE}"
-                  bat "move ${imageTar} ${env.SAVE_PATH}"
+                 script {
+                    def imageTar = "${env.WORKSPACE}\\${DOCKER_IMAGE}.tar"
+                    bat "docker save -o ${imageTar} ${env.DOCKER_IMAGE}"
+                    bat "move ${imageTar} ${env.SAVE_PATH}"
+                  }
             }
         }
     }
