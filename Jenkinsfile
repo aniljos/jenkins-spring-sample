@@ -7,11 +7,11 @@ pipeline {
         //maven 'Maven 3.6.3'
     }
 
-    environment {
-        // Define any environment variables
-        //MAVEN_HOME = tool name: 'Maven 3.6.3'
-        //PATH = "${MAVEN_HOME}/bin:${env.PATH}"
-    }
+//     environment {
+//         // Define any environment variables
+//         //MAVEN_HOME = tool name: 'Maven 3.6.3'
+//         //PATH = "${MAVEN_HOME}/bin:${env.PATH}"
+//     }
 
     stages {
         stage('Checkout') {
