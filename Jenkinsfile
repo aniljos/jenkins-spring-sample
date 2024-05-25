@@ -9,7 +9,9 @@ pipeline {
 
     environment {
         // Define any environment variables
-        DOCKER_IMAGE = 'app-spring-services:latest'
+        //DOCKER_IMAGE = 'app-spring-services:latest'
+        IMAGE_NAME = 'spring-app'
+        IMAGE_TAG = 'latest'
         POSTGRES_DB = 'training'
         POSTGRES_USER = 'postgres'
         POSTGRES_PASSWORD = 'sa'
@@ -39,7 +41,8 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    bat "docker build -t ${DOCKER_IMAGE} ."
+                    //bat "docker build -t ${DOCKER_IMAGE} ."
+                    docker.build("${env.IMAGE_NAME}:${env.IMAGE_TAG}")
                 }
             }
         }
@@ -48,9 +51,15 @@ pipeline {
                  //bat "docker-compose down"
                  //bat "docker-compose up -d"
                  script {
-                    def imageTar = "${env.WORKSPACE}\\${DOCKER_IMAGE}.tar"
-                    bat "docker save -o ${imageTar} ${env.DOCKER_IMAGE}"
-                    bat "move ${imageTar} ${env.SAVE_PATH}"
+                    //def imageTar = "${env.WORKSPACE}\\${DOCKER_IMAGE}.tar"
+                    //bat "docker save -o ${imageTar} ${env.DOCKER_IMAGE}"
+                    //bat "move ${imageTar} ${env.SAVE_PATH}"
+
+                    // Save the Docker image to a tar file
+                    sh "docker save -o ${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar ${env.IMAGE_NAME}:${env.IMAGE_TAG}"
+
+                    // Copy the tar file to the desired local path
+                    sh "cp ${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar ${env.SAVE_PATH}"
                   }
             }
         }
