@@ -45,6 +45,14 @@ pipeline {
                 echo 'Deploying application...'
                 // Example: Copy the JAR file to a remote server
                 // sh 'scp target/your-app.jar user@remote.server:/path/to/deploy'
+
+                script {
+                              def sourcePath = "${env.WORKSPACE}\\build" // Path to the build output directory
+                              def destinationPath = "D:\\Jenkins\\Spring\\builds" // Target directory for deployment
+
+                              echo "Copying files from ${sourcePath} to ${destinationPath}"
+                              bat "xcopy /s /e /y ${sourcePath}\\* ${destinationPath}\\"
+                  }
             }
         }
     }
