@@ -9,7 +9,7 @@ pipeline {
 
     environment {
         // Define any environment variables
-        DOCKER_IMAGE = '-spring-services:latest'
+        DOCKER_IMAGE = 'app-spring-services:latest'
         POSTGRES_DB = 'training'
         POSTGRES_USER = 'postgres'
         POSTGRES_PASSWORD = 'sa'
