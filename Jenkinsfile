@@ -48,8 +48,8 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                 //bat "docker-compose down"
-                 //bat "docker-compose up -d"
+                 bat "docker-compose down"
+                 bat "docker-compose up -d"
                  script {
                     //def imageTar = "${env.WORKSPACE}\\${DOCKER_IMAGE}.tar"
                     //bat "docker save -o ${imageTar} ${env.DOCKER_IMAGE}"
