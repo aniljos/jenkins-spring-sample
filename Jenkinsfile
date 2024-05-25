@@ -51,7 +51,7 @@ pipeline {
                               def destinationPath = "D:\\Jenkins\\Spring\\builds" // Target directory for deployment
 
                               echo "Copying files from ${sourcePath} to ${destinationPath}"
-                              bat "xcopy /s /e /y ${sourcePath}\\* ${destinationPath}\\"
+                              bat "xcopy /s /e /y ${sourcePath}\\ ${destinationPath}\\"
                   }
             }
         }
