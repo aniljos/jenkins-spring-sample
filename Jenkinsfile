@@ -47,11 +47,11 @@ pipeline {
                 // sh 'scp target/your-app.jar user@remote.server:/path/to/deploy'
 
                 script {
-                              def sourcePath = "${env.WORKSPACE}\\build" // Path to the build output directory
-                              def destinationPath = "D:\\Jenkins\\Spring\\builds" // Target directory for deployment
+                       def sourcePath = "${env.WORKSPACE}\\target\\app-services-1.0.0" // Update with your actual JAR file name
+                       def destinationPath = "D:\\Jenkins\\Spring\\builds" // Update with your desired destination path
 
-                              echo "Copying files from ${sourcePath} to ${destinationPath}"
-                              bat "xcopy /s /e /y ${sourcePath}\\ ${destinationPath}\\"
+                       // Copy the built JAR file to the destination path
+                       bat "copy ${sourcePath} ${destinationPath}"
                   }
             }
         }
